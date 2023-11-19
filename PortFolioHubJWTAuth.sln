@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortFolioHubJWTAuth", "PortFolioHubJWTAuth\PortFolioHubJWTAuth.csproj", "{C242F335-49A9-44FC-8AB6-789A8DC5986E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{55A8531C-592A-40BC-B5E7-24914F90FF54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C242F335-49A9-44FC-8AB6-789A8DC5986E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C242F335-49A9-44FC-8AB6-789A8DC5986E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C242F335-49A9-44FC-8AB6-789A8DC5986E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C242F335-49A9-44FC-8AB6-789A8DC5986E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55A8531C-592A-40BC-B5E7-24914F90FF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55A8531C-592A-40BC-B5E7-24914F90FF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55A8531C-592A-40BC-B5E7-24914F90FF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55A8531C-592A-40BC-B5E7-24914F90FF54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F069542C-6B3D-4047-B644-DFFA89E96F93}
+	EndGlobalSection
+EndGlobal
