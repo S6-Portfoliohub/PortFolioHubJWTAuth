@@ -10,7 +10,7 @@
 
         public User GetUsers()
         {
-
+            throw new NotImplementedException();
         }
     }
 }
