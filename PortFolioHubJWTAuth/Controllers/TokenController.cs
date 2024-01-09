@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PortFolioHubJWTAuth.Models;
+using DAL;
 using PortFolioHubJWTAuth.Services;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -19,8 +19,8 @@ namespace PortFolioHubJWTAuth.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(User _userData)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(User _userData)
         {
             if (_userData == null || _userData.Username == null || _userData.Password == null)
             {
@@ -37,5 +37,17 @@ namespace PortFolioHubJWTAuth.Controllers
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
+        [HttpPost("user")]
+        public async Task<IActionResult> CreateUser(User _userData)
+        {
+            if (_userData == null || _userData.Username == null || _userData.Password == null)
+            {
+                return BadRequest("Invalid credentials");
+            }
+
+            _jwtTokenService._userDAO.AddUser(_userData);
+
+            return Ok(_userData);
+        }
     }
 }

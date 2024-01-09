@@ -2,10 +2,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PortFolioHubJWTAuth.Services;
 using System.Text;
+using DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<AuthDatabaseSettings>(
+    builder.Configuration.GetSection("PortfolioHubDatabase"));
+
+builder.Services.AddScoped<UserDAO, UserDAO>();
+
 builder.Services.AddScoped<JwtTokenService, JwtTokenService>();
 
 builder.Services.AddControllers();

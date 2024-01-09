@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.IdentityModel.Tokens;
-using PortFolioHubJWTAuth.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using DAL;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,26 +10,17 @@ namespace PortFolioHubJWTAuth.Services
     {
 
         public IConfiguration _configuration;
+        public UserDAO _userDAO;
 
-        public JwtTokenService(IConfiguration configuration)
+        public JwtTokenService(IConfiguration configuration, UserDAO userDAO)
         {
-
             _configuration = configuration;
-
+            _userDAO = userDAO;
         }
-
-        private readonly List<User> _users = new()
-        {
-            new("test@test.com", "test", " "),
-            new("test@test.com", "test", "testUid2")
-        };
 
         public JwtSecurityToken? GenereateAuthToken(User userCredentials)
         {
-            var user = _users.FirstOrDefault(u =>
-                u.Username == userCredentials.Username &&
-                u.Password == userCredentials.Password
-            );
+            User? user = _userDAO.ValidateUser(userCredentials.Username, userCredentials.Password);
 
             if (user is null)
             {
@@ -42,7 +32,9 @@ namespace PortFolioHubJWTAuth.Services
                 new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                new Claim("UserId", user.Username),
+                new Claim("UserId", user.Id),
+                new Claim("Username", user.Username),
+                new Claim("Role", user.Role)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
