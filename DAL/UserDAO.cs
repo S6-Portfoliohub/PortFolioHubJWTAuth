@@ -21,19 +21,31 @@ namespace DAL
         public User? ValidateUser(string username, string password)
         {
             User user = _projectCollection.Find(u => u.Username == username).FirstOrDefault();
-            //check if user exists
-            if (user is null || user.Password != password)
+
+            if (user is null)
             {
                 return null;
             }
+            //check if user exists
+            
+            if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return user;
+            }
 
-            return user;
+            return null;
         }
 
         public void AddUser(User user)
         {
             user.Role = "User";
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             _projectCollection.InsertOne(user);
+        }
+
+        public User? GetUser(string id)
+        {
+            return _projectCollection.Find(u => u.Id == id).FirstOrDefault();
         }
     }
 }

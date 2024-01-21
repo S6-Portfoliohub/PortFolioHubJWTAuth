@@ -49,5 +49,29 @@ namespace PortFolioHubJWTAuth.Services
 
             return token;
         }
+
+        public JwtSecurityToken? ValidateToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            return (JwtSecurityToken)validatedToken;
+        }
     }
 }

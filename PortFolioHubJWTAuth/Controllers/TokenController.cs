@@ -24,17 +24,25 @@ namespace PortFolioHubJWTAuth.Controllers
         {
             if (_userData == null || _userData.Username == null || _userData.Password == null)
             {
-                return BadRequest("Invalid credentials");
+                return Unauthorized("Invalid credentials");
             }
 
             var token = _jwtTokenService.GenereateAuthToken(_userData);
 
             if (token == null)
             {
-                return BadRequest("Invalid credentials");
+                return Unauthorized("Invalid credentials");
             }
 
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+        }
+
+        [HttpPost("validate")]
+        public async Task<IActionResult> ValidateToken(string token)
+        {
+            var validatedToken = _jwtTokenService.ValidateToken(token);
+
+            return Ok(validatedToken);
         }
 
         [HttpPost("user")]
@@ -48,6 +56,14 @@ namespace PortFolioHubJWTAuth.Controllers
             _jwtTokenService._userDAO.AddUser(_userData);
 
             return Ok(_userData);
+        }
+
+        [HttpGet("users/{id}")]
+        public async Task<IActionResult> GetUsers(string id)
+        {
+            User? user = _jwtTokenService._userDAO.GetUser(id);
+            if (user == null) return NotFound();
+            return Ok(user);
         }
     }
 }
