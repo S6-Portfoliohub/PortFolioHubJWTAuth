@@ -47,5 +47,10 @@ namespace DAL
         {
             return _projectCollection.Find(u => u.Id == id).FirstOrDefault();
         }
+
+        public void DeleteUser(string id)
+        {
+            _projectCollection.DeleteOne(u => u.Id == id);
+        }
     }
 }

@@ -65,5 +65,14 @@ namespace PortFolioHubJWTAuth.Controllers
             if (user == null) return NotFound();
             return Ok(user);
         }
+
+        [HttpDelete("users/{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            User? user = _jwtTokenService._userDAO.GetUser(id);
+            if (user == null) return NotFound();
+            _jwtTokenService._userDAO.DeleteUser(id);
+            return Ok();
+        }
     }
 }
